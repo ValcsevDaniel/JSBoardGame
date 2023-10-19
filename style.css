@@ -1,10 +1,4 @@
-.item1 { grid-area: header; }
-.item3 { grid-area: main; }
-.item4 { grid-area: right; }
-.item5 { grid-area: footer; }
 
-.item6 {grid-area: left;}
-.item7 {grid-area: right1;}
 
 @font-face {
   font-family: spacer;
@@ -15,157 +9,220 @@ body{
   font-family: spacer;
   background: url('images/theme.jpg'); 
 }
+* {
+  box-sizing: border-box;
+}
+
 h1{
   color: rgb(65, 35, 24);
 }
-
-.grid-container {
-  display: grid;
-  grid-template-areas:
-    'header header header header right right'
-    'main main main main right right'
-    'footer footer footer footer footer footer';
-  gap: 10px;
-  
-  padding: 10px;
-}
-.elementGrid{
-  display: grid;
-  grid-template-areas: 
-  'left right1';
-  
- 
-  
-}
-#mainTable{
-  margin-top: 20%;
-  margin-right: 5%;
-  height: 80%;
+h2{
+  margin-bottom: 2%;
+  margin-top: 2%;
 }
 
-table{
-  background-color:whitesmoke ;
-  width: 80%;
+
+#mainTitle{
+  font-size: 4em;
+  color: rgb(65, 35, 24);
+}
+#startscreen{
+  text-align: center;
+  margin-top: 10%;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+}
+#map{
+  background-color: rgb(255, 255, 255);
+  width: 90%;
   margin-left: 5%;
-  height: 70%;
-  border-radius: 20px;
-  border-width: 25px;
+  height: 90%;
+  border-radius: 5px;
+}
+.game{
   
-  vertical-align: top;
+  display: none;
 }
-#seasons{
-  background-color: transparent;
-  height: 15% !important;
-  margin-top: 0% !important;
-  table-layout: fixed;
-  width: 75%;
-  margin-left: 20%;
-  
-  color: whitesmoke;
-  margin-bottom: 0%;
-}
-#tavasz{
-  background-color:rgb(6, 173, 6);
-}
-#nyar{
-  background-color: gold;
-
-}
-#title{
-  margin-left: 10% !important;
-}
-#osz{
-  background-color: burlywood;
-}
-#tel{
-  background-color: rgb(38, 111, 255);
-}
-#pontok{
-  padding: 0px 0 !important;
-  margin-top: 0%;
-  font-size: 1em;
+.map{
+  background-color: sandybrown;
+  border-radius: 5px;
 }
 .mountain{
+  background-image: url('images/hegy.jpeg');
   background-size: contain;
-  background-image: url('images/hegy.jpeg') !important;
 }
-th, td{
-  padding: 20px;
-  border-radius:10px;
-  background-color: rgb(255, 200, 0);
+.water{
+  background-image: url('images/water.png');
+  background-size: contain;
 }
-.missions {
-  background-color:black;
-  font-size: small;
-  color: whitesmoke;
-  height: 50%;
+.forest{
+  background-image: url('images/tree.png');
+  background-size: contain;
 }
-#mainFrame{
-  visibility: hidden;
+.farm{
+  background-image: url('images/house.jpg');
+  background-size: contain;
 }
-.seasontitle{
-  font-size: 1.5em;
-  text-align: left !important;
-  margin-left: 5%;
-  margin-bottom: 0;
-  margin-top: 3%;
-  padding: 0;
-}
-#missions{
-  width: 70%;
-  height: 20%;
-  margin-top: 0;
-  margin-left: 25%;
-  background-color: transparent;
-  border-spacing: 25px !important;
+.town{
+  background-image: url('images/house.jpg');
+  background-size: contain;
 
+}
+.grain{
+  background-image: url('images/grain.jpg');
+  background-size: contain;
+}
+
+
+/* jobb oldal formázása*/
+.seasons{
+  border-radius: 5px;
+  font-size: 1.5vw;
+}
+hr{
+  border: 2px solid rgb(65, 35, 24);
+}
+#spring{
+  background-color: greenyellow;
+  border: 3px solid green;
+}
+#summer{
+  background-color: yellow;
+  border: 3px solid rgb(108, 98, 9);
+}
+#autumn{
+  background-color: rgb(126, 92, 29);
+  border: 3px solid rgb(66, 51, 5);
+}
+#winter{
+  background-color: rgb(82, 109, 233);
+  border: 3px solid rgb(0, 0, 255);
+}
+#missionsTable{
+  width: 90%;
+  height: 20%;
+  color: rgb(255, 255, 255);
+  margin-left: 10%;
+  font-size: 0.7em;
+}
+.missions{
+  background-color: #191919;
+  border-radius: 5px;
+  padding: 10px;
+}
+#actions{
+  margin-top: 15%;
+  margin-left: 30%;
+}
+.actionButton{
+  margin-top: 2%;
+  margin-bottom: 5%;
 }
 #currentElement{
-  background-color: transparent;
-  width: 60%;
-  height: 30%;
-  margin-top: 0% !important;
-  margin-left: 0;
-  margin-right: 50%;
-  margin-bottom: 20%;
+  background-color: white;
   border-radius: 10px;
-  border-collapse: collapse;
-  
-  
-}
-.elementTable{
-  background-color: rgb(255, 255, 255);
-}
-hr {
-  display: block;
-  
-  
-  margin-left: 5%;
-  margin-right: auto;
-  border-style: inset;
-  border: 1px solid black;
-  
+  width: 90%;
+  height: 100%;
+  color: #000;
+  table-layout: fixed;
+  margin-right: 10%;
+  margin-top: 5%;
   
 }
 
-.grid-container > div {
-  
-  text-align: center;
-  padding: 20px 0;
-  font-size: 1.3vw;
+#time{
+  height: 20px;
+  font-family: Arial, Helvetica, sans-serif;
 }
- button{
-    all: unset;
-    background-color: rgb(167, 176, 35);
-    color: #1e1e1e;
-    margin: 10px;
-    padding: 10px;
-    width: 20%;
-    border-radius: 5px;
-    transition: 0.2s;
+
+
+
+
+
+
+
+
+
+/* kezdő gomb formázása */
+
+.bn5 {
+  padding: 0.6em 2em;
+  border: none;
+  outline: none;
+  color: rgb(255, 255, 255);
+  background: rgb(65, 35, 24);
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
 }
-button:hover {
-  background-color: rgb(133, 113, 13);
-  width: 25%;
-  transition: 0.3s;
+
+.bn5:before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00c8,
+    #ff0000
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowingbn5 20s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes glowingbn5 {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.bn5:active {
+  color: #000;
+}
+
+.bn5:active:after {
+  background: transparent;
+}
+
+.bn5:hover:before {
+  opacity: 1;
+}
+
+.bn5:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #191919;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
 }

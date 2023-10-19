@@ -6,224 +6,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Burgonya játék</title>
     <link rel="stylesheet" type="text/css" href="style.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     
 
 </head>
 <body>
-    <div class="grid-container">
-        <div class="item3"><h1>Burgonya térkép</h1><br><button id="game">Játék</button></div>
-        
-        <div class="item3" id="mainFrame">
-            <table id="mainTable">
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td class="mountain"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="mountain"></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="mountain"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="mountain"></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="mountain"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-
-            </table>
-        </div>  
-        <div class="item4">
-            <table id="seasons">
-                <tr>
-                    <td id="tavasz">Tavasz: 0 pont</td>
-                    <td id="nyarr">Nyár: 0 pont</td>
-                    <td id="osz">Ősz: 0 pont</td>
-                    <td id="tel">Tél: 0 pont</td>
-                </tr>
-            </table>
-            <p id="pontok">Összesen: 0 pont</p>
-            <p class= "seasontitle">Jelenlegi évszak: Nyár(BC)</p>
-            <hr> 
-            <table id="missions">
-                <tr >
-                    <td class="missions"><h2>Az erdő széle</h2><p>A térképed szélével szomszédos erdőmezőidért egy-egy pontot kapsz.</p></td>
-                    <td class="missions"><h2>Álmos-völgy</h2> <p>Minden olyan sorért, amelyben három erdőmező van, négy-négy pontot kapsz.</p></td>
-                </tr>
-                <tr >
-                    <td class="missions"><h2>Krumpliöntözés</h2><p>A farmmezőiddel szomszédos vízmezőidért két-két pontot kapsz.</p></td>
-                    <td class="missions"><h2>Határvidék</h2> <p>Minden teli sorért vagy oszlopért 6-6 pontot kapsz.</p></td>
-                </tr>
-            </table>
-            <p class="seasontitle">Évszakból hátralévő idő</p>
-            <hr>
-            <div class="elementGrid">
-                <p class="seasontitle item6" id="title">Lehelyzendő elem: </p>
-            <table id="currentElement item7">
-                <tr class="elementTable">
-                    <td class="elementTable"></td>
-                    <td class="elementTable"></td>
-                    <td class="elementTable"></td>
-                    <td class="elementTable"></td>
-                </tr>
-                <tr class="elementTable">
-                    <td class="elementTable"></td>
-                    <td class="elementTable"></td>
-                    <td class="elementTable"></td>
-                    <td class="elementTable"></td>
-                </tr>
-                <tr class="elementTable">
-                    <td class="elementTable"></td>
-                    <td class="elementTable"></td>
-                    <td class="elementTable"></td>
-                    <td class="elementTable"></td>
-                </tr>
-                <tr class="elementTable">
-                    <td class="elementTable"></td>
-                    <td class="elementTable"></td>
-                    <td class="elementTable"></td>
-                    <td class="elementTable"></td>
-                </tr>
-            </table>
-            </div>
+    <div id="startscreen">
+        <h1 id="mainTitle">Burgonya játék</h1>
+        <a class="bn5" id="startButton">Játék</a>
+    </div>
+    <div id="game" class="row game">
+        <div class="column" id="placeForMap">
+            <h1>Burgonya játék</h1>
             
-
+        </div>
+        <div class="column">
+            <table class="seasons">
+                <tr class="seasons">
+                    <td class="seasons" id="spring">Tavasz: 0 pont</td>
+                    <td class="seasons" id="summer">Nyár: 0 pont</td>
+                    <td class="seasons" id="autumn">Ősz: 0 pont</td>
+                    <td class="seasons" id="winter">Tél: 0 pont</td>
+                </tr>
+            </table>
+            <p>Összesen: 0 pont</p>
+            <h2>Jelenlegi évszak: Nyár(BC)</h2>
+            <hr>
+            <table id="missionsTable">
+                <tr>
+                    <td class="missions"></td>
+                    <td class="missions"></td>
+                </tr>
+                <tr>
+                    <td class="missions"></td>
+                    <td class="missions"></td>
+                </tr>
+            </table>
+                <h2>Évszakból hátralévő idő: 0/7</h2>
+                <hr>
+                <div class="row">
+                    <div class="column">
+                        <h2>Lehelyezendő elem: </h2>
+                        <div id="actions">
+                            <button class="bn5 actionButton" id="rotation">Forgatás</button><br>
+                            <button class="bn5 actionButton" id="mirror">Tükrözés</button>
+                        </div>
+                        
+                    </div>
+                    <div class="column">
+                        <table id="currentElement">
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td id="time"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td ></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            
         </div>
         
-            
-        
-        <div class="item5"></div>
-      </div>
+
+        </div>
+    </div>
+    
+    
+    
     <script src="script.js"></script>
 </body>
 </html>
