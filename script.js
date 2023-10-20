@@ -212,7 +212,7 @@ const game = document.getElementById('game')
 const map = document.getElementById('placeForMap')
 const rotationButton = document.getElementById('rotation')
 const mirrorButton = document.getElementById('mirror')
-
+let dragTiles = document.querySelectorAll()
 
 //Főoldal
 playButton.addEventListener('click', ()=>{
@@ -235,18 +235,22 @@ function elementDraw(e,n){
   }
   if(n == 2){
     e.setAttribute('class', 'water')
+    e.classList.add("tile")
     e.setAttribute('draggable',true)
   }
   if(n == 3){
     e.setAttribute('class', 'forest')
+    e.classList.add("tile")
     e.setAttribute('draggable',true)
   }
   if(n == 4){
     e.setAttribute('class', 'town')
+    e.classList.add("tile")
     e.setAttribute('draggable',true)
   }
   if(n == 5){
     e.setAttribute('class', 'farm')
+    e.classList.add("tile")
     e.setAttribute('draggable',true)
   }
 }
