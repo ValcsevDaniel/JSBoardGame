@@ -214,6 +214,8 @@ const rotationButton = document.getElementById('rotation')
 const mirrorButton = document.getElementById('mirror')
 shuffle(elements)
 let currentShape = elements[currentElement]["shape"]
+let seasonTime = 7;
+let gameTime = 28;
 
 
 //Főoldal
@@ -402,10 +404,16 @@ function checkPlacement(i,j){
   for(let g = 0; g < 3; g++){
 
     for(let f = 0; f < 3; f++){
-      if(g + i > 10 || f + j > 10){
+      if(g + i > 10 && currentShape[g][f] == 1){
+        
+        return false;
+      }
+      if(f + j > 10 && currentShape[g][f] == 1){
+        
         return false;
       }
       if(currentShape[g][f] == 1 && gameMap[i + g][j + f] != 0){
+        
         return false;
       }
       
