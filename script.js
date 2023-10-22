@@ -205,13 +205,15 @@ let elements = [
 
 
 //változók
-
+let currentElement = 0;
 const playButton = document.getElementById('startButton')
 const startScreen = document.getElementById('startscreen')
 const game = document.getElementById('game')
 const map = document.getElementById('placeForMap')
 const rotationButton = document.getElementById('rotation')
 const mirrorButton = document.getElementById('mirror')
+shuffle(elements)
+const currentShape = elements[currentElement]["shape"]
 
 
 //Főoldal
@@ -268,11 +270,20 @@ function drawGameboard(){
     for(let g = 0; g < 11; g++){
       let td = document.createElement("td");
       td.setAttribute('class', 'map');
+      td.setAttribute('ondrop','drop(event)');
+      td.setAttribute('ondragover','allowDrop(event)');
       row.appendChild(td);
       elementDraw(td, gameMap[i][g]);
       
     }
 
+  }
+}
+function removeGameboard() {
+  const table = document.getElementById('map');
+  if (table) {
+    const parent = table.parentNode;
+    parent.removeChild(table);
   }
 }
 
@@ -383,9 +394,130 @@ function mirrorImage(matrix) {
 
   return mirroredMatrix;
 }
+//drag placement
+function checkPlacement(i,j){
+  
+  for(let g = 0; g < 3; g++){
+
+    for(let f = 0; f < 3; f++){
+      if(g + i > 10 || f + j > 10){
+        return false;
+      }
+      if(currentShape[g][f] == 1 && gameMap[i + g][j + f] != 0){
+        return false;
+      }
+      
+    }
+  }
+  return true;
+}
+
+
+function allowDrop(ev) {
+  
+  // Get the closest table row (tr) that contains the ev.target element
+  var row = ev.target.closest('tr');
+  
+  // Get all the cells (td) within that row
+  var cells = row.getElementsByTagName('td');
+  
+  // Find the index of the cell that matches the ev.target element
+  var columnIndex = Array.from(cells).indexOf(ev.target);
+  
+  // Find the index of the row within the table
+  var table = row.closest('table');
+  var rows = table.getElementsByTagName('tr');
+  var rowIndex = Array.from(rows).indexOf(row);
+  if(checkPlacement(rowIndex,columnIndex)){
+    ev.preventDefault();
+    for(let i = rowIndex; i < rowIndex + 3; i++){
+
+      for(let j = columnIndex; j < columnIndex + 3; j++){
+        // Check if i and j are valid indices
+        if (i >= 0 && i < rows.length && j >= 0 && j < cells.length && currentShape[i - rowIndex][j - columnIndex] == 1) {
+          
+          var neighborCell = rows[i].getElementsByTagName('td')[j];
+
+          
+          neighborCell.style.background = "#90EE90"
+        }
+      }
+    }
+  }else{
+    for(let i = rowIndex; i < rowIndex + 3; i++){
+
+      for(let j = columnIndex; j < columnIndex + 3; j++){
+        // Check if i and j are valid indices
+        if (i >= 0 && i < rows.length && j >= 0 && j < cells.length && currentShape[i - rowIndex][j - columnIndex] == 1) {
+          
+          var neighborCell = rows[i].getElementsByTagName('td')[j];
+
+          
+          neighborCell.style.background = "#f1807e"
+        }
+      }
+    }
+  }
+  ev.target.addEventListener('dragleave', function() {
+    for(let i = rowIndex; i < rowIndex + 3; i++){
+
+      for(let j = columnIndex; j < columnIndex + 3; j++){
+        // Check if i and j are valid indices
+        if (i >= 0 && i < rows.length && j >= 0 && j < cells.length) {
+          
+          var neighborCell = rows[i].getElementsByTagName('td')[j];
+
+          
+          neighborCell.style.background = ""
+        }
+      }
+    }
+    
+  });
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  ev.target.style.background = "";
+  var data = ev.dataTransfer.getData("text");
+  var currentType = elements[currentElement]["type"];
+  ev.target.setAttribute('class',`${currentType}`);
+  
+  // Get the closest table row (tr) that contains the ev.target element
+  var row = ev.target.closest('tr');
+  
+  // Get all the cells (td) within that row
+  var cells = row.getElementsByTagName('td');
+  
+  // Find the index of the cell that matches the ev.target element
+  var columnIndex = Array.from(cells).indexOf(ev.target);
+  
+  // Find the index of the row within the table
+  var table = row.closest('table');
+  var rows = table.getElementsByTagName('tr');
+  var rowIndex = Array.from(rows).indexOf(row);
+  
+  for(let i = rowIndex; i < rowIndex + 3; i++){
+
+    for(let j = columnIndex; j < columnIndex + 3; j++){
+      // Check if i and j are valid indices
+      if (i >= 0 && i < rows.length && j >= 0 && j < cells.length && currentShape[i - rowIndex][j - columnIndex] == 1) {
+        
+        gameMap[i][j] = tileType(currentType);
+
+        
+        
+      }
+    }
+  }
+  removeGameboard();
+  drawGameboard();
+
+  
+}
 
 //Game logic
-let currentElement = 0;
+
 let gameMap = 
 [[0,0,0,0,0,0,0,0,0,0,0], 
 [0,1,0,0,0,0,0,0,0,0,0],
@@ -442,4 +574,3 @@ mirrorButton.addEventListener('click',()=>{
   clearElement();
   drawCurrentElement(elements[currentElement]);
 })
-shuffle(elements)
