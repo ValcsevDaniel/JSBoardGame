@@ -213,7 +213,7 @@ const map = document.getElementById('placeForMap')
 const rotationButton = document.getElementById('rotation')
 const mirrorButton = document.getElementById('mirror')
 shuffle(elements)
-const currentShape = elements[currentElement]["shape"]
+let currentShape = elements[currentElement]["shape"]
 
 
 //Főoldal
@@ -354,6 +354,7 @@ function rotateCurrentElement(){
   let matrix = elements[currentElement]["shape"];
   matrix = rotateClockwise(matrix);
   elements[currentElement]["shape"] = matrix;
+  currentShape = matrix;
   
 
 }
@@ -361,6 +362,7 @@ function mirrorCurrentElement(){
   let mat = elements[currentElement]["shape"];
   mat = mirrorImage(mat)
   elements[currentElement]["shape"] = mat;
+  currentShape = mat;
 
 }
 function rotateClockwise(a) {
@@ -391,7 +393,7 @@ function mirrorImage(matrix) {
     // Reverse the order of elements in each row
     mirroredMatrix.push(matrix[i].slice().reverse());
   }
-
+  
   return mirroredMatrix;
 }
 //drag placement
