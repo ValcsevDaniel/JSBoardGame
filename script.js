@@ -212,7 +212,7 @@ const game = document.getElementById('game')
 const map = document.getElementById('placeForMap')
 const rotationButton = document.getElementById('rotation')
 const mirrorButton = document.getElementById('mirror')
-let dragTiles = document.querySelectorAll()
+
 
 //Főoldal
 playButton.addEventListener('click', ()=>{
@@ -305,6 +305,9 @@ function tileType(e){
   if(e=="farm"){
     return 5;
   }
+}
+function drawCanvas(){
+
 }
 
 function drawCurrentElement(e){
