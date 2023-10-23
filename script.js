@@ -55,6 +55,7 @@ const missions =
     }
   ],
 }
+const seasons = ["Tavasz" ,"Nyár" ,"Ősz","Tél" ]
 
 let elements = [
     {
@@ -214,8 +215,39 @@ const rotationButton = document.getElementById('rotation')
 const mirrorButton = document.getElementById('mirror')
 shuffle(elements)
 let currentShape = elements[currentElement]["shape"]
+let seasonTimeDisplay = document.getElementById("seasonTime")
 let seasonTime = 7;
 let gameTime = 28;
+let currentSeasonCount = 0;
+let points = 0;
+let seasonDisplay = document.getElementById("seasonDisplay")
+let pointDisplay = document.getElementById("totalPoints")
+let springPoints = document.getElementById("spring")
+let summerPoints = document.getElementById("summer")
+let autumnPoints = document.getElementById("autumn")
+let winterPoints = document.getElementById("winter")
+let gameMap = 
+[[0,0,0,0,0,0,0,0,0,0,0], 
+[0,1,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,1,0,0],
+[0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,1,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,1,0],
+[0,0,0,0,0,1,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0]]
+
+
+
+seasonTimeDisplay.innerHTML = `Az évszakból hátralévő idő : ${seasonTime} / 7`
+seasonDisplay.innerHTML = `Jelenlegi évszak: ${seasons[currentSeasonCount]}`
+pointDisplay.innerHTML = `Összesen ${points} pont`
+
+
+
+
 
 
 //Főoldal
@@ -258,7 +290,18 @@ function elementDraw(e,n){
     e.setAttribute('draggable',true)
   }
 }
-
+function resetGameboard(){
+  gameMap = [[0,0,0,0,0,0,0,0,0,0,0], 
+  [0,1,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,1,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,1,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,1,0],
+  [0,0,0,0,0,1,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0]]}
 
 function drawGameboard(){
   
@@ -291,6 +334,7 @@ function removeGameboard() {
 
 function missionSelection(){
   var table = document.getElementById("missionsTable");
+  let missioncounter = 0;
   for (var i = 0, row; row = table.rows[i]; i++) {
     
    //iterate through rows
@@ -299,11 +343,52 @@ function missionSelection(){
      //iterate through columns
      
      let title = document.createElement('h2');
-     title.innerHTML = missions['basic'][i + j]['title'];
+     title.innerHTML = missions['basic'][missioncounter]['title'];
      col.appendChild(title);
-     col.innerHTML += missions['basic'][i + j]['description']
+     col.innerHTML += missions['basic'][missioncounter]['description']
+     missioncounter++;
+     //depending on the season highlight the current one
+     col.classList.remove('active') 
+     if(currentSeasonCount == 0){
+      
+      if(i == 0 && j == 0 || i == 0 && j == 1){
+        col.classList.add('active')
+      }
+      
+     }
+     if(currentSeasonCount == 1){
+      if(i == 0 && j == 1 || i == 1 && j == 0){
+        col.classList.add('active')
+      }
+      
+     }
+      if(currentSeasonCount == 2){
+        if(i == 1 && j == 0 || i == 1 && j == 1){
+          col.classList.add('active')
+        }
+        
+      }
+      if(currentSeasonCount == 3){
+        if(i == 1 && j == 1 || i == 0 && j == 0){
+          col.classList.add('active')
+        }
+        
+      }
    }  
 } 
+}
+function clearMissionsTable() {
+  var table = document.getElementById("missionsTable");
+  for (var i = 0, row; row = table.rows[i]; i++) {
+    
+   //iterate through rows
+   //rows would be accessed using the "row" variable assigned in the for loop
+    for (var j = 0, col; col = row.cells[j]; j++) {
+     //iterate through columns
+     
+     col.innerHTML = "";
+    }
+  }
 }
 function tileType(e){
   if(e == "water"){
@@ -319,8 +404,21 @@ function tileType(e){
     return 5;
   }
 }
-function drawCanvas(){
 
+function clearElement(){
+  var table = document.getElementById("currentElement");
+  
+  for (var i = 1; i < 4; i++) {
+    let row = table.rows[i];
+   //iterate through rows
+   //rows would be accessed using the "row" variable assigned in the for loop
+    for (var j = 0; j < 3; j++) {
+     //iterate through columns
+     row.cells[j].setAttribute('class', '');
+     }
+
+     
+  }  
 }
 
 function drawCurrentElement(e){
@@ -522,25 +620,75 @@ function drop(ev) {
   }
   removeGameboard();
   drawGameboard();
+  seasonTime = seasonTime - elements[currentElement]["time"];
+  updateSeasonTime();
+  
+  currentElement++;
+  clearElement();
+  drawCurrentElement(elements[currentElement]);
+  currentShape = elements[currentElement]["shape"];
 
   
 }
 
 //Game logic
+function updateSeasonTime(){
+  gameTime = gameTime - elements[currentElement]["time"];
+  
+  if(seasonTime > 0){
+    seasonTimeDisplay.innerHTML = `Az évszakból hátralévő idő : ${seasonTime} / 7`
+  }else{
+    if(currentSeasonCount == 0){
+      points = points + erdoSzele();
+      points = points + almosVölgy();
+      springPoints.innerHTML = `Tavasz: ${points}`
+    }
+    if(currentSeasonCount == 1){
+      let pastPoints = points;
+      points = points + krumpliOntozes();
+      points = points + hatarVidek();
+      summerPoints.innerHTML = `Nyár: ${points - pastPoints}`
+    }
+    if(currentSeasonCount == 2){
+      let pastPoints = points;
+      points = points + erdoSzele();
+      points = points + almosVölgy();
+      autumnPoints.innerHTML = `Ősz: ${points - pastPoints}`
+    }
+    if(currentSeasonCount == 3){
+      let pastPoints = points;
+      points = points + krumpliOntozes();
+      points = points + hatarVidek();
+      winterPoints.innerHTML = `Tél: ${points - pastPoints}`
+    }
+    seasonTime = 7;
+    seasonTimeDisplay.innerHTML = `Az évszakból hátralévő idő : ${seasonTime} / 7`
+    currentSeasonCount = currentSeasonCount + 1;
+    seasonDisplay.innerHTML = `Jelenlegi évszak: ${seasons[currentSeasonCount % 4]}`
+    pointDisplay.innerHTML = `Összesen ${points} pont`
+    clearMissionsTable();
+    missionSelection();
+    removeGameboard();
+    resetGameboard();
+    
+    drawGameboard();
+    currentElement = 0;
+    shuffle(missions);
+    if(gameTime <= 0){
+      alert("Vége a játéknak")
+    }
+    
+    
+  }
+  
 
-let gameMap = 
-[[0,0,0,0,0,0,0,0,0,0,0], 
-[0,1,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,1,0,0],
-[0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,1,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,1,0],
-[0,0,0,0,0,1,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0]]
+}
 
+
+
+function cloneArray(arr) {
+  return arr.map(row => row.slice());
+}
 function shuffle(array) {
   let currentIndex = array.length,  randomIndex;
 
@@ -558,21 +706,90 @@ function shuffle(array) {
 
   return array;
 }
-function clearElement(){
-  var table = document.getElementById("currentElement");
-  
-  for (var i = 1; i < 4; i++) {
-    let row = table.rows[i];
-   //iterate through rows
-   //rows would be accessed using the "row" variable assigned in the for loop
-    for (var j = 0; j < 3; j++) {
-     //iterate through columns
-     row.cells[j].setAttribute('class', '');
-     }
+function erdoSzele(){
+  let points = 0;
+  for(let i = 0; i < 11; i++){
+    if(gameMap[i][0] == 3){
+      points++;
+    }
+    if(gameMap[i][10] == 3){
+      points++;
+    }
+    if(gameMap[0][i] == 3){
+      points++;
+    }
+    if(gameMap[10][i] == 3){
+      points++;
+    }
+  }
+  return points;
 
-     
-  }  
 }
+function almosVölgy(){
+  let points = 0;
+  for(let i = 0; i < 11; i++){
+    let count = 0;
+    for(let j = 0; j < 11; j++){
+      if(gameMap[i][j] == 3){
+        count++;
+      }
+    }
+    if(count >= 3){
+      points = points + 4;
+    }
+  }
+  return points;
+}
+function krumpliOntozes(){
+  let points = 0;
+  for(let i = 1; i < 10; i++){
+    for(let j = 1; j < 10; j++){
+      if(gameMap[i][j] == 5){
+        if(gameMap[i][j + 1] == 2){
+          points = points + 2;
+        }
+        if(gameMap[i][j - 1] == 2){
+          points = points + 2;
+        }
+        if(gameMap[i + 1][j] == 2){
+          points = points + 2;
+        }
+        if(gameMap[i - 1][j] == 2){
+          points = points + 2;
+        }
+      }
+    }
+  }
+  return points;
+}
+function hatarVidek(){
+  let points = 0;
+  for(let i = 0; i < 11; i++){
+    let count = 0;
+    for(let j = 0; j < 11; j++){
+      if(gameMap[i][j] != 0){
+        count++;
+      }
+    }
+    if(count == 11){
+      points = points + 6;
+    }
+  }
+  for(let i = 0; i < 11; i++){
+    let count = 0;
+    for(let j = 0; j < 11; j++){
+      if(gameMap[j][i] != 0){
+        count++;
+      }
+    }
+    if(count == 11){
+      points = points + 6;
+    }
+  }
+  return points;
+}
+
+
 
 rotationButton.addEventListener('click',()=>{
   rotateCurrentElement();

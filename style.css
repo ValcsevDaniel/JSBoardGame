@@ -2,6 +2,7 @@
 
 @font-face {
   font-family: spacer;
+
   src: url('fonts/PixelifySans-VariableFont_wght.ttf');
 }
 body{
@@ -49,34 +50,37 @@ h2{
   
   display: none;
 }
+.active{
+  border: 2px solid red;
+}
 .map{
   background-color: sandybrown;
   border-radius: 5px;
 }
 .mountain{
-  background-image: url('images/hegy.jpeg');
+  background-image: url('tiles/mountain_tile.png');
   background-size: contain;
 }
 .water{
-  background-image: url('images/water.png');
-  background-size: contain;
+  background-image: url('tiles/water_tile.png');
+  background-size: cover;
 }
 .forest{
-  background-image: url('images/tree.png');
-  background-size: contain;
+  background-image: url('tiles/forest_tile.png');
+  background-size: cover;
 }
 .farm{
-  background-image: url('images/house.jpg');
-  background-size: contain;
+  background-image: url('tiles/plains_tile.png');
+  background-size: cover;
 }
 .town{
-  background-image: url('images/house.jpg');
-  background-size: contain;
+  background-image: url('tiles/village_tile.png');
+  background-size: cover;
 
 }
 .grain{
-  background-image: url('images/grain.jpg');
-  background-size: contain;
+  background-image: url('tiles/grain.jpg');
+  background-size: cover;
 }
 
 
