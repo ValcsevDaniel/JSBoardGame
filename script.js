@@ -226,6 +226,11 @@ let springPoints = document.getElementById("spring")
 let summerPoints = document.getElementById("summer")
 let autumnPoints = document.getElementById("autumn")
 let winterPoints = document.getElementById("winter")
+let erdoszele = 0
+let almosVolgy = 0
+let krumpliontozes = 0
+let hatarvidek = 0
+let missionPoints = document.querySelectorAll(".missions > p")
 let gameMap = 
 [[0,0,0,0,0,0,0,0,0,0,0], 
 [0,1,0,0,0,0,0,0,0,0,0],
@@ -346,6 +351,9 @@ function missionSelection(){
      title.innerHTML = missions['basic'][missioncounter]['title'];
      col.appendChild(title);
      col.innerHTML += missions['basic'][missioncounter]['description']
+     let points = document.createElement("p")
+     points.innerHTML = "0 pont"
+     col.appendChild(points)
      missioncounter++;
      //depending on the season highlight the current one
      col.classList.remove('active') 
@@ -630,44 +638,71 @@ function drop(ev) {
 
   
 }
-
+function missionPointsDraw(){
+  missionPoints[0].innerHTML = `${erdoszele} pont`
+  missionPoints[1].innerHTML = `${almosVolgy} pont`
+  missionPoints[2].innerHTML = `${krumpliontozes} pont`
+  missionPoints[3].innerHTML = `${hatarvidek} pont`
+}
 //Game logic
 function updateSeasonTime(){
   gameTime = gameTime - elements[currentElement]["time"];
   
+  
+  
   if(seasonTime > 0){
     seasonTimeDisplay.innerHTML = `Az évszakból hátralévő idő : ${seasonTime} / 7`
   }else{
+    
+    
     if(currentSeasonCount == 0){
+      erdoszele = erdoszele + erdoSzele();
+      almosVolgy = almosVolgy + almosVölgy();
       points = points + erdoSzele();
       points = points + almosVölgy();
       springPoints.innerHTML = `Tavasz: ${points}`
+      
     }
     if(currentSeasonCount == 1){
       let pastPoints = points;
+      
       points = points + krumpliOntozes();
-      points = points + hatarVidek();
+      points = points + almosVölgy();
+      krumpliontozes = krumpliontozes + krumpliOntozes();
+      almosVolgy = almosVolgy + almosVölgy();
       summerPoints.innerHTML = `Nyár: ${points - pastPoints}`
+      
     }
     if(currentSeasonCount == 2){
       let pastPoints = points;
-      points = points + erdoSzele();
-      points = points + almosVölgy();
+      krumpliontozes = krumpliontozes + krumpliOntozes();
+      hatarvidek = hatarvidek + hatarVidek();
+      points = points + krumpliOntozes();
+      points = points + hatarVidek();
       autumnPoints.innerHTML = `Ősz: ${points - pastPoints}`
+      
     }
     if(currentSeasonCount == 3){
       let pastPoints = points;
+      erdoszele = erdoszele + erdoSzele();
+      hatarvidek = hatarvidek + hatarVidek();
       points = points + krumpliOntozes();
       points = points + hatarVidek();
       winterPoints.innerHTML = `Tél: ${points - pastPoints}`
+      
     }
     seasonTime = 7;
     seasonTimeDisplay.innerHTML = `Az évszakból hátralévő idő : ${seasonTime} / 7`
     currentSeasonCount = currentSeasonCount + 1;
     seasonDisplay.innerHTML = `Jelenlegi évszak: ${seasons[currentSeasonCount % 4]}`
     pointDisplay.innerHTML = `Összesen ${points} pont`
+    
+
+
     clearMissionsTable();
     missionSelection();
+    missionPoints = document.querySelectorAll(".missions > p")
+    missionPointsDraw();
     removeGameboard();
     resetGameboard();
     
@@ -675,7 +710,8 @@ function updateSeasonTime(){
     currentElement = 0;
     shuffle(missions);
     if(gameTime <= 0){
-      alert("Vége a játéknak")
+      alert(`Vége a játéknak, pontszámod: ${points}`)
+      removeGameboard();
     }
     
     
