@@ -1,4 +1,4 @@
-//help
+
 
 const missions = 
 {
@@ -691,6 +691,7 @@ function updateSeasonTime(){
       winterPoints.innerHTML = `Tél: ${points - pastPoints}`
       
     }
+    
     seasonTime = 7;
     seasonTimeDisplay.innerHTML = `Az évszakból hátralévő idő : ${seasonTime} / 7`
     currentSeasonCount = currentSeasonCount + 1;
@@ -703,13 +704,11 @@ function updateSeasonTime(){
     missionSelection();
     missionPoints = document.querySelectorAll(".missions > p")
     missionPointsDraw();
-    removeGameboard();
-    resetGameboard();
     
-    drawGameboard();
     currentElement = 0;
     shuffle(missions);
     if(gameTime <= 0){
+      points = points + hegyek();
       alert(`Vége a játéknak, pontszámod: ${points}`)
       removeGameboard();
     }
@@ -792,6 +791,20 @@ function krumpliOntozes(){
         }
         if(gameMap[i - 1][j] == 2){
           points = points + 2;
+        }
+      }
+    }
+  }
+  return points;
+}
+function hegyek(){
+  let points = 0;
+  //fully surrounded mountains are worth 1 point
+  for(let i = 1; i < 10; i++){
+    for(let j = 1; j < 10; j++){
+      if(gameMap[i][j] == 1){
+        if(gameMap[i][j + 1] != 0 && gameMap[i][j - 1] != 0 && gameMap[i + 1][j] != 0 && gameMap[i - 1][j] != 0){
+          points++;
         }
       }
     }
